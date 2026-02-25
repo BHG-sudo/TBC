@@ -1,0 +1,17 @@
+body {
+  background-color: bisque;
+  font-family: "Courier New", Courier, monospace;
+}
+#title {
+  justify-content: center;
+  text-align: center;
+}
+#startMenu > ul {
+  list-style: none;
+}
+#startMenu {
+  margin-top: 200px;
+  justify-content: center;
+  text-align: center;
+  font-size: large;
+}

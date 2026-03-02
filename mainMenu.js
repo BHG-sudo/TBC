@@ -1,20 +1,23 @@
-function funcMenu(event) {
+function menuHandler(event) {
   target = event.target;
-  console.log(target);
-
-  if (target.innerText == "Play") {
-    var playWindow = window.open("height=100,width=100");
-  } else if (target.innerText == "Settings") {
-    console.log("Settings");
-  } else if (target.innerText == "Credits") {
-    console.log("Credits");
-  } else if (target.innerText == "Quit") {
-    console.log("Quit");
+  switch (target.innerText) {
+    case "Play":
+      document.getElementById("startMenu").classList.toggle("disabled");
+      document.getElementById("difMenu").classList.toggle("disabled");
+    case "Settings":
+    case "Credits":
+    case "Quit":
+    case "Easy":
+    case "Medium":
+    case "Hard":
+    case "Impossible":
   }
 }
 
-var menu = document.getElementById("menu");
-for (var i = 0; i < menu.children.length; i++) {
-  menu.children[i].addEventListener("click", funcMenu);
-  console.log(i);
+var menu = document.getElementsByClassName("menuList");
+for (var j = 0; j < menu.length; j++) {
+  for (var i = 0; i < menu[j].children.length; i++) {
+    menu[j].children[i].addEventListener("click", menuHandler);
+    console.log(i);
+  }
 }

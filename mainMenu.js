@@ -48,7 +48,7 @@ function toggleDisabled(x) {
   document.getElementById(x).classList.toggle("disabled");
 }
 function byebye() {
-  window.location.href = "//localhost/";
+  window.location.href = ".";
 }
 var menu = document.getElementsByClassName("menuList");
 for (var j = 0; j < menu.length; j++) {
@@ -85,4 +85,5 @@ console.log(battStats.children);
 for (var k = 0; k < battUI.length; k++) {
   battUI[k].addEventListener("click", battHandler);
 }
+
 

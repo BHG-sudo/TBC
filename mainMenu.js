@@ -4,34 +4,47 @@ function menuHandler(event) {
   target = event.target;
   switch (target.innerText) {
     case "Play":
-      menuToggler("difMenu");
+      toggleDisabled("startMenu");
+      toggleDisabled("difMenu");
       break;
-    case "Settings":
     case "Credits":
+      toggleDisabled("startMenu");
+      toggleDisabled("credMenu");
+      break;
     case "Quit":
+      window.location.href = "//localhost/";
+      break;
+    case "Continue":
+      toggleDisabled("transition");
+      toggleDisabled("battContainer");
+      break;
     case "Easy":
-      menuToggler("difMenu");
+      toggleDisabled("difMenu");
+      toggleDisabled("transition");
       break;
     case "Medium":
       difficulty = 1;
-      menuToggler("difMenu");
+      toggleDisabled("difMenu");
+      toggleDisabled("transition");
       break;
     case "Hard":
       difficulty = 2;
-      menuToggler("difMenu");
+      toggleDisabled("difMenu");
+      toggleDisabled("transition");
       break;
     case "Impossible":
       difficulty = 3;
-      menuToggler("difMenu");
+      toggleDisabled("difMenu");
+      toggleDisabled("transition");
       break;
   }
-  console.log(difficulty);
+  function toggleDisabled(x) {
+    document.getElementById(x).classList.toggle("disabled");
+  }
 }
-function menuToggler(x){
-  document.getElementById("startMenu").classList.toggle("disabled") 
-  document.getElementById(x).classList.toggle("disabled")
+function battleHandler(x) {
+  
 }
-
 var menu = document.getElementsByClassName("menuList");
 for (var j = 0; j < menu.length; j++) {
   for (var i = 0; i < menu[j].children.length; i++) {

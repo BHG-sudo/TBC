@@ -20,7 +20,6 @@
         <div id="startMenu" class="Menu">
             <ul class="menuList">
                 <li>Play</li>
-                <li>Settings</li>
                 <li>Credits</li>
                 <li>Quit</li>
             </ul>
@@ -30,8 +29,30 @@
                 <li>Easy</li>
                 <li>Medium</li>
                 <li>Hard</li>
-                <li>Imposible</li>
+                <li>Impossible</li>
             </ul>
+        </div>
+        <div id="transition" class="transition disabled">
+            <img src="Assets/story.png" alt="Lore">
+        </div>
+        <div id="battContainer" class="container disabled">
+            <img src="Assets/slimeblock.png" alt="Slime" id="monster" class="monster">
+            <img src="Assets/karakter.png" alt="Player" id="player" class="player">
+            <div id="battMenu" class="battMenu">
+                <ul id="battStats" class="battStats">
+                    <li>HP 20/20</li>
+                    <li>ATK 5</li> <!-- Az adatbázisból kinyerjük -->
+                    <li>DF 3</li> <!-- Az adatbázisból kinyerjük -->
+                </ul>
+                <table id="battUI" class="battUI">
+                    <tr>
+                        <td>Attack</td>
+                        <td>Spells</td>
+                        <td>Block</td>
+                        <td>Inventory</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </main>
 </body>

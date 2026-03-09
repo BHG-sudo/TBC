@@ -12,7 +12,7 @@ function menuHandler(event) {
       toggleDisabled("credMenu");
       break;
     case "Kilépés":
-      window.location.href = "//localhost/";
+      window.location.href = ".";
       break;
     case "Folytatás":
       toggleDisabled("transition");
@@ -85,3 +85,4 @@ console.log(battStats.children);
 for (var k = 0; k < battUI.length; k++) {
   battUI[k].addEventListener("click", battHandler);
 }
+

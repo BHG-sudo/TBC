@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="tbcStyle.css">
+    <title>TBC</title>
+</head>
+
+<body>
+
+    <header>
+        <div class="title">
+            <h1>TBC</h1>
+            <h2>Turn-Based-Combat</h2>
+        </div>
+    </header>
+    <main>
+        <div id="startMenu" class="Menu">
+            <ul class="menuList">
+                <li>Kezdjük</li>
+                <li>Kreditek</li>
+                <li>Kilépés</li>
+            </ul>
+        </div>
+        <div id="difMenu" class="Menu disabled">
+            <ul class="menuList">
+                <li>Könnyű</li>
+                <li>Közepes</li>
+                <li>Nehéz</li>
+                <li>Lehetetlen</li>
+            </ul>
+        </div>
+        <div id="transition" class="transition disabled">
+            <img src="Assets/story.png" alt="Lore">
+            <div class="child">
+                <ul class="menuList">
+                    <li>Folytatás</li>
+                    <li>Mégsem</li>
+                </ul>
+            </div>
+        </div>
+        <div id="battContainer" class="container disabled">
+            <img src="Assets/slimeblock.png" alt="Slime" id="monster" class="monster">
+            <img src="Assets/karakter.png" alt="Player" id="player" class="player">
+            <div id="battMenu" class="battMenu">
+                <ul id="battStats" class="battStats">
+                    <li>HP 20/20</li>
+                    <li>ATK 5</li> <!-- Az adatbázisból kinyerjük -->
+                    <li>DF 3</li> <!-- Az adatbázisból kinyerjük -->
+                </ul>
+                <table id="battUI" class="battUI">
+                    <tr>
+                        <td>Támadás</td>
+                        <td>Varázslatok</td>
+                        <td>Védekezés</td>
+                        <td>Leltár</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="deathScreen" class="deathScreen disabled">
+            <img src="Assets/deathscreen.png" alt="Moloch death screen">
+        </div>
+    </main>
+</body>
+<script src="mainMenu.js"></script>
+
+
+</html>

@@ -19,7 +19,9 @@ function menuHandler(event) {
       toggleDisabled("battContainer");
       break;
     case "Mégsem":
-      window.location.href = "//localhost/";      
+      toggleDisabled("transition");
+      toggleDisabled("deathScreen");
+      window.setTimeout(byebye, 5000);
       break;
     case "Könnyű":
       toggleDisabled("difMenu");
@@ -41,12 +43,12 @@ function menuHandler(event) {
       toggleDisabled("transition");
       break;
   }
-  function toggleDisabled(x) {
-    document.getElementById(x).classList.toggle("disabled");
-  }
 }
-function battleHandler(x) {
-  
+function toggleDisabled(x) {
+  document.getElementById(x).classList.toggle("disabled");
+}
+function byebye() {
+  window.location.href = "//localhost/";
 }
 var menu = document.getElementsByClassName("menuList");
 for (var j = 0; j < menu.length; j++) {
@@ -54,4 +56,32 @@ for (var j = 0; j < menu.length; j++) {
     menu[j].children[i].addEventListener("click", menuHandler);
     console.log(i);
   }
+}
+
+//Battle Handling
+
+function battHandler(event) {
+  target = event.target;
+
+  switch (target.innerText) {
+    case "Támadás":
+      break;
+    case "Varázslatok":
+      break;
+    case "Védekezés":
+      break;
+    case "Leltár":
+      break;
+  }
+
+  /* check enemy
+    - könnyű diffen: nem használ actiont
+    -nehéz diffen: használ actiont
+  */
+}
+var battStats = document.getElementById("battStats");
+var battUI = document.querySelectorAll("td");
+console.log(battStats.children);
+for (var k = 0; k < battUI.length; k++) {
+  battUI[k].addEventListener("click", battHandler);
 }

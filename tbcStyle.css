@@ -33,6 +33,16 @@ main {
 }
 .transition {
   width: fit-content;
+  position: relative;
+}
+.child {
+  position: absolute;
+  bottom: 40px;
+  right: 40%;
+  font-weight: bold;
+}
+.child > ul > li:hover{
+  background-color: brown;
 }
 .container {
   position: relative;
@@ -59,11 +69,19 @@ main {
   bottom: 0px;
   width: 720px;
   height: 160px;
-  display: ;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .battStats {
   list-style: none;
   width: 100px;
   padding-top: 20px;
   padding-left: 10px;
+}
+.battUI{
+  width: fit-content;
+  height: fit-content;
+  padding-right: 20px;
+  border-spacing: 20px;
 }

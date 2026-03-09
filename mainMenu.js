@@ -3,36 +3,39 @@ var difficulty = 0;
 function menuHandler(event) {
   target = event.target;
   switch (target.innerText) {
-    case "Play":
+    case "Kezdjük":
       toggleDisabled("startMenu");
       toggleDisabled("difMenu");
       break;
-    case "Credits":
+    case "Kreditek":
       toggleDisabled("startMenu");
       toggleDisabled("credMenu");
       break;
-    case "Quit":
+    case "Kilépés":
       window.location.href = "//localhost/";
       break;
-    case "Continue":
+    case "Folytatás":
       toggleDisabled("transition");
       toggleDisabled("battContainer");
       break;
-    case "Easy":
+    case "Mégsem":
+      window.location.href = "//localhost/";      
+      break;
+    case "Könnyű":
       toggleDisabled("difMenu");
       toggleDisabled("transition");
       break;
-    case "Medium":
+    case "Közepes":
       difficulty = 1;
       toggleDisabled("difMenu");
       toggleDisabled("transition");
       break;
-    case "Hard":
+    case "Nehéz":
       difficulty = 2;
       toggleDisabled("difMenu");
       toggleDisabled("transition");
       break;
-    case "Impossible":
+    case "Lehetetlen":
       difficulty = 3;
       toggleDisabled("difMenu");
       toggleDisabled("transition");

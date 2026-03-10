@@ -41,7 +41,7 @@ main {
   right: 40%;
   font-weight: bold;
 }
-.child > ul > li:hover{
+.menuList > li:hover{
   background-color: brown;
 }
 .container {
@@ -79,6 +79,7 @@ main {
   padding-top: 20px;
   padding-left: 10px;
 }
+
 .battUI{
   width: fit-content;
   height: fit-content;

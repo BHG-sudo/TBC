@@ -16,8 +16,9 @@ class Player {
 }
 // Enemy class
 class Enemy {
-  constructor(HP, ATK, DF) {
-    this.HP = HP;
+  constructor(maxHP, ATK, DF) {
+    this.maxHP = maxHP;
+    this.HP = maxHP;
     this.ATK = ATK;
     this.DF = DF;
   }
@@ -27,6 +28,7 @@ let tran = document.getElementById("transition");
 let difficulty = 0;
 let action = 1;
 const player = new Player(0, 0, 0);
+const enemy = new Enemy(0, 0, 0);
 
 function menuHandler(event) {
   target = event.target;
@@ -47,6 +49,10 @@ function menuHandler(event) {
       toggleDisabled("transition");
       tranInterval = setInterval(transition, 500);
       setTimeout(battle, 2000);
+      enemy.maxHP = 30;
+      enemy.HP = enemy.maxHP;
+      enemy.ATK = 4;
+      enemy.DF = 2;
       break;
     case "Mégsem":
       toggleDisabled("story");
@@ -60,7 +66,7 @@ function menuHandler(event) {
       action = 2;
       player.maxHP = 20;
       player.HP = player.maxHP;
-      player.ATK = 4;
+      player.ATK = 5;
       player.DF = 3;
       player.renewStats();
       break;
@@ -116,7 +122,7 @@ function battHandler(event) {
     switch (target.innerText) {
       case "Támadás":
         action--;
-        classHandler(monster, 1, 10);
+        classHandler(1, 10);
         break;
       case "Varázslatok":
         action--;
@@ -128,19 +134,28 @@ function battHandler(event) {
         break;
     }
   }
+  if ((action = 0)) {
+    classHandler(2, 10);
+  }
 }
 
-function classHandler(name, what, change) {
+function classHandler(what, change) {
   /*
   name = object/class name
   change = amount of change in something 
-  what: 1 = 'name' HP gets lowered by 'change' variable
+  what: 1 = 'player' HP gets lowered by 'change' variable
         2 = 
   */
   switch (what) {
     case 1: {
-      name.HP = name.HP - change;
-      battStats.children[0].innerText = "HP: " + name.maxHP + "/" + name.HP;
+      enemy.HP = enemy.HP - player.ATK;
+      if (enemy.hp <= 0) {
+        console.log("Nyertél");
+      }
+    }
+    case 2: {
+      player.HP = player.HP - change;
+      battStats.children[0].innerText = "HP: " + player.maxHP + "/" + player.HP;
     }
   }
 }

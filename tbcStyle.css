@@ -22,6 +22,8 @@ main {
   margin-top: 100px;
   width: 720px;
   height: 480px;
+}
+.mainBgr {
   background-image: url(Assets/menu.png);
 }
 .Menu {
@@ -31,9 +33,19 @@ main {
   font-size: large;
   color: white;
 }
-.transition {
+.story {
   width: fit-content;
   position: relative;
+}
+.transition1 {
+  width: 720px;
+  height: 480px;
+  background-image: url(Assets/elsoszint1.png);
+}
+.transition2 {
+  width: 720px;
+  height: 480px;
+  background-image: url(Assets/elsoszint2.png);
 }
 .child {
   position: absolute;
@@ -41,7 +53,7 @@ main {
   right: 40%;
   font-weight: bold;
 }
-.child > ul > li:hover{
+.menuList > li:hover {
   background-color: brown;
 }
 .container {
@@ -79,7 +91,8 @@ main {
   padding-top: 20px;
   padding-left: 10px;
 }
-.battUI{
+
+.battUI {
   width: fit-content;
   height: fit-content;
   padding-right: 20px;

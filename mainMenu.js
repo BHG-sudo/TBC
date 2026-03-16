@@ -149,7 +149,7 @@ function setPlayer(diff) {
     case 2: {
       player.maxHP = 20;
       player.HP = 20;
-      player.ATK = 4;
+      player.ATK = 5;
       player.DF = 2;
       break;
     }
@@ -202,7 +202,7 @@ function classHandler(what, change) {
   if (what == 1) {
     enemy.HP = enemy.HP - change;
     if (enemy.HP <= 0) {
-      transition;
+      document.getElementById("battContainer").innerHTML = "Győztél!";
     }
   } else if (what == 2) {
     player.HP = player.HP - change;

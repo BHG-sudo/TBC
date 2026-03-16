@@ -1,0 +1,14 @@
+TORONY:
+- fal: 313131
+- fal árnyék: 1d1d1d
+- dísz: 290000
+- tető: 720000
+FÁK:
+- első sor: 044700
+- második sor: 033800
+- utolsó sor: 022200
+SÖTÉT SZOBA:
+- világos részek: 3b3485
+- árnyékos részek: 27225a
+- nagyon sötét részek: 050035
+- fényforrások: fc6a00

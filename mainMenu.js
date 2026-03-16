@@ -2,9 +2,9 @@ let battStats = document.getElementById("battStats");
 
 // Player class
 class Player {
-  constructor(maxHP, ATK, DF) {
+  constructor(maxHP, HP, ATK, DF) {
     this.maxHP = maxHP;
-    this.HP = maxHP;
+    this.HP = HP;
     this.ATK = ATK;
     this.DF = DF;
   }
@@ -16,7 +16,7 @@ class Player {
 }
 // Enemy class
 class Enemy {
-  constructor(maxHP, ATK, DF) {
+  constructor(maxHP, HP, ATK, DF) {
     this.maxHP = maxHP;
     this.HP = maxHP;
     this.ATK = ATK;
@@ -26,9 +26,8 @@ class Enemy {
 
 let tran = document.getElementById("transition");
 let difficulty = 0;
-let action = 1;
-const player = new Player(0, 0, 0);
-const enemy = new Enemy(0, 0, 0);
+const player = new Player(0, 0, 0, 0);
+const enemy = new Enemy(0, 0, 0, 0);
 
 function menuHandler(event) {
   target = event.target;
@@ -49,55 +48,47 @@ function menuHandler(event) {
       toggleDisabled("transition");
       tranInterval = setInterval(transition, 500);
       setTimeout(battle, 2000);
-      enemy.maxHP = 30;
-      enemy.HP = enemy.maxHP;
-      enemy.ATK = 4;
-      enemy.DF = 2;
+      console.log(difficulty);
+      setPlayer(difficulty);
+      player.renewStats();
+      setEnemy(difficulty);
+      console.log(player.HP, player.ATK);
+      console.log(enemy.HP, enemy.ATK);
       break;
     case "Mégsem":
       toggleDisabled("story");
       toggleDisabled("deathScreen");
       window.setTimeout(byebye, 5000);
       break;
-    case "Könnyű": {
+    case "Könnyű":
+      difficulty = 0;
       document.getElementById("mainBgr").classList.toggle("mainBgr");
       toggleDisabled("difMenu");
       toggleDisabled("story");
-      action = 2;
-      player.maxHP = 20;
-      player.HP = player.maxHP;
-      player.ATK = 5;
-      player.DF = 3;
-      player.renewStats();
       break;
-    }
-    case "Közepes": {
+    case "Közepes":
       difficulty = 1;
       toggleDisabled("difMenu");
       toggleDisabled("story");
-      action = 2;
       break;
-    }
-    case "Nehéz": {
+    case "Nehéz":
       difficulty = 2;
       toggleDisabled("difMenu");
       toggleDisabled("story");
       break;
-    }
-    case "Lehetetlen": {
+    case "Lehetetlen":
       difficulty = 3;
       toggleDisabled("difMenu");
       toggleDisabled("story");
       break;
-    }
   }
 }
 function toggleDisabled(x) {
   document.getElementById(x).classList.toggle("disabled");
 }
 function transition() {
-  tran.classList.toggle("transition1");
-  tran.classList.toggle("transition2");
+  tran.classList.toggle("transition11");
+  tran.classList.toggle("transition12");
 }
 function battle() {
   clearInterval(tranInterval);
@@ -106,6 +97,70 @@ function battle() {
 }
 function byebye() {
   window.location.href = ".";
+}
+function setEnemy(diff) {
+  switch (diff) {
+    case 0: {
+      enemy.maxHP = 20;
+      enemy.HP = 20;
+      enemy.ATK = 3;
+      enemy.DF = 2;
+      break;
+    }
+    case 1: {
+      enemy.maxHP = 20;
+      enemy.HP = 20;
+      enemy.ATK = 4;
+      enemy.DF = 2;
+      break;
+    }
+    case 2: {
+      enemy.maxHP = 20;
+      enemy.HP = 20;
+      enemy.ATK = 5;
+      enemy.DF = 2;
+      break;
+    }
+    case 3: {
+      enemy.maxHP = 20;
+      enemy.HP = 20;
+      enemy.ATK = 6;
+      enemy.DF = 2;
+      break;
+    }
+  }
+}
+function setPlayer(diff) {
+  switch (diff) {
+    case 0: {
+      player.maxHP = 20;
+      player.HP = 20;
+      player.ATK = 7;
+      player.DF = 2;
+      break;
+    }
+    case 1: {
+      player.maxHP = 20;
+      player.HP = 20;
+      player.ATK = 6;
+      player.DF = 2;
+      break;
+    }
+    case 2: {
+      player.maxHP = 20;
+      player.HP = 20;
+      player.ATK = 4;
+      player.DF = 2;
+      break;
+    }
+    case 3: {
+      player.maxHP = 20;
+      player.HP = 20;
+      player.ATK = 2;
+      player.DF = 2;
+      break;
+    }
+  }
 }
 let menu = document.getElementsByClassName("menuList");
 for (let j = 0; j < menu.length; j++) {
@@ -118,24 +173,22 @@ for (let j = 0; j < menu.length; j++) {
 
 function battHandler(event) {
   target = event.target;
-  if (action > 0) {
-    switch (target.innerText) {
-      case "Támadás":
-        action--;
-        classHandler(1, 10);
-        break;
-      case "Varázslatok":
-        action--;
-        break;
-      case "Védekezés":
-        action--;
-        break;
-      case "Leltár":
-        break;
-    }
-  }
-  if ((action = 0)) {
-    classHandler(2, 10);
+  switch (target.innerText) {
+    case "Támadás":
+      classHandler(1, player.ATK);
+      classHandler(2, enemy.ATK);
+      console.log(player.HP, player.ATK);
+      console.log(enemy.HP, enemy.ATK);
+      break;
+    case "Varázslatok":
+      classHandler(1, player.ATK);
+      classHandler(2, enemy.ATK);
+      break;
+    case "Védekezés":
+      classHandler(2, enemy.ATK - player.DF);
+      break;
+    case "Leltár":
+      break;
   }
 }
 
@@ -143,19 +196,21 @@ function classHandler(what, change) {
   /*
   name = object/class name
   change = amount of change in something 
-  what: 1 = 'player' HP gets lowered by 'change' variable
-        2 = 
+  what: 1 = 'enemy' HP gets lowered by 'change' variable
+        2 = 'player' HP gets lowered by 'change' variable
   */
-  switch (what) {
-    case 1: {
-      enemy.HP = enemy.HP - player.ATK;
-      if (enemy.hp <= 0) {
-        console.log("Nyertél");
-      }
+  if (what == 1) {
+    enemy.HP = enemy.HP - change;
+    if (enemy.HP <= 0) {
+      transition;
     }
-    case 2: {
-      player.HP = player.HP - change;
-      battStats.children[0].innerText = "HP: " + player.maxHP + "/" + player.HP;
+  } else if (what == 2) {
+    player.HP = player.HP - change;
+    battStats.children[0].innerText = "HP: " + player.maxHP + "/" + player.HP;
+    if (player.HP <= 0) {
+      toggleDisabled("battContainer");
+      toggleDisabled("deathScreen");
+      window.setTimeout(byebye, 5000);
     }
   }
 }

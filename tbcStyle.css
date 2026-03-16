@@ -37,15 +37,25 @@ main {
   width: fit-content;
   position: relative;
 }
-.transition1 {
+.transition11 {
   width: 720px;
   height: 480px;
   background-image: url(Assets/elsoszint1.png);
 }
-.transition2 {
+.transition12 {
   width: 720px;
   height: 480px;
   background-image: url(Assets/elsoszint2.png);
+}
+.transition21 {
+  width: 720px;
+  height: 480px;
+  background-image: url(Assets/masodikszint1.png);
+}
+.transition22 {
+  width: 720px;
+  height: 480px;
+  background-image: url(Assets/masodikszint2.png);
 }
 .child {
   position: absolute;

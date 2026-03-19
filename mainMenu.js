@@ -46,14 +46,11 @@ function menuHandler(event) {
     case "Folytatás":
       toggleDisabled("story");
       toggleDisabled("transition");
-      tranInterval = setInterval(transition, 500);
+      tranInterval = setInterval(transition1, 500);
       setTimeout(battle, 2000);
-      console.log(difficulty);
       setPlayer(difficulty);
       player.renewStats();
       setEnemy(difficulty);
-      console.log(player.HP, player.ATK);
-      console.log(enemy.HP, enemy.ATK);
       break;
     case "Mégsem":
       toggleDisabled("story");
@@ -86,14 +83,24 @@ function menuHandler(event) {
 function toggleDisabled(x) {
   document.getElementById(x).classList.toggle("disabled");
 }
-function transition() {
+function transition1() {
   tran.classList.toggle("transition11");
   tran.classList.toggle("transition12");
+}
+function transition2(){
+  tran.classList.toggle("transition21");
+  tran.classList.toggle("transition22");
 }
 function battle() {
   clearInterval(tranInterval);
   toggleDisabled("transition");
   toggleDisabled("battContainer");
+}
+function endOfDemo(){
+  clearInterval(tranInterval);
+  toggleDisabled("transition");
+  alert("Demó vége");
+  byebye();
 }
 function byebye() {
   window.location.href = ".";
@@ -203,6 +210,13 @@ function classHandler(what, change) {
     enemy.HP = enemy.HP - change;
     if (enemy.HP <= 0) {
       document.getElementById("battContainer").innerHTML = "Győztél!";
+      tran.classList.remove("transition11");
+      tran.classList.remove("transition12");
+      tran.classList.toggle("transition21");
+      toggleDisabled("battContainer");
+      toggleDisabled("transition");
+      tranInterval = setInterval(transition2, 500);
+      setTimeout(endOfDemo, 2000)
     }
   } else if (what == 2) {
     player.HP = player.HP - change;

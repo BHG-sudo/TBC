@@ -1,4 +1,5 @@
 TORONY:
+- belső falak: 515151
 - fal: 313131
 - fal árnyék: 1d1d1d
 - dísz: 290000

@@ -13,3 +13,7 @@ SÖTÉT SZOBA:
 - árnyékos részek: 27225a
 - nagyon sötét részek: 050035
 - fényforrások: fc6a00
+BÚTOROK:
+  - alap szín: 6e3728
+  - körvonal: 5d2f22
+  - árnyék: 4a251b

@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: grey;
+  font-family: "Courier New", Courier, monospace;
+}
+header,
+main {
+  display: grid;
+  justify-content: center;
+  text-align: center;
+}
+header {
+  margin-top: 20px;
+}
+main {
+  margin-top: 100px;
+}
+ul {
+  list-style: none;
+}
+.disabled {
+  display: none;
+}
+.menu {
+  width: 720px;
+  height: 480px;
+  color: white;
+  background-image: url(Assets/menu.png);
+}
+.mainM,
+.diffM,
+.kred {
+  margin-top: 190px;
+}
+li:hover {
+  background-color: brown;
+}
+.battle {
+  width: 720px;
+  height: 480px;
+  background-color: darkgrey;
+}
+.story {
+  width: 720px;
+  height: 480px;
+  position: relative;
+}
+.story > ul {
+  position: absolute;
+  top: 80%;
+  left: 45%;
+  font-weight: bold;
+}
+.deathscreen {
+  width: 720px;
+  height: 480px;
+  background-image: url(Assets/deathscreen.png);
+}
+.battle {
+  position: relative;
+}
+.enemy {
+  position: absolute;
+  top: 0%;
+  left: 55%;
+  scale: 0.77;
+}
+.player {
+  position: absolute;
+  top: 45%;
+  left: 3%;
+  scale: 0.75;
+}
+.battleUI {
+  position: absolute;
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  justify-content: space-between;
+  height: 200px;
+  width: 720px;
+  top: 80%;
+  background-color: black;
+  color: white;
+}
+.battleUI > p,
+.battleUI > ul {
+  height: fit-content;
+  margin-top: 20px;
+}
+.battleUI > ul {
+  text-align: left;
+  margin-left: 10px;
+}
+.transition {
+  width: 720px;
+  height: 480px;
+}
+.transition11 {
+  background-image: url(Assets/Transition/elsoszint1.png);
+}
+.transition12 {
+  background-image: url(Assets/Transition/elsoszint2.png);
+}
+.transition21 {
+  background-image: url(Assets/Transition/masodikszint1.png);
+}
+.transition22 {
+  background-image: url(Assets/Transition/masodikszint2.png);
+}

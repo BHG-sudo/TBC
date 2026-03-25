@@ -11,7 +11,7 @@ FÁK:
 SÖTÉT SZOBA:
 - világos részek: 3b3485
 - árnyékos részek: 27225a
-- nagyon sötét részek: 050035
+- nagyon sötét részek: 100a50
 - fényforrások: fc6a00
 BÚTOROK:
   - alap szín: 6e3728

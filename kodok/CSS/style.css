@@ -28,7 +28,7 @@ ul {
   width: 720px;
   height: 480px;
   color: white;
-  background-image: url(../Assets/menu.png);
+  background-image: url(../../Assets/menu.png);
 }
 .mainM,
 .diffM,
@@ -57,7 +57,7 @@ li:hover {
 .deathscreen {
   width: 720px;
   height: 480px;
-  background-image: url(../Assets/deathscreen.png);
+  background-image: url(../../Assets/deathscreen.png);
 }
 .battle {
   position: relative;
@@ -104,14 +104,14 @@ li:hover {
   height: 480px;
 }
 .transition11 {
-  background-image: url(../Assets/Transition/elsoszint1.png);
+  background-image: url(../../Assets/Transition/elsoszint1.png);
 }
 .transition12 {
-  background-image: url(../Assets/Transition/elsoszint2.png);
+  background-image: url(../../Assets/Transition/elsoszint2.png);
 }
 .transition21 {
-  background-image: url(../Assets/Transition/masodikszint1.png);
+  background-image: url(../../Assets/Transition/masodikszint1.png);
 }
 .transition22 {
-  background-image: url(../Assets/Transition/masodikszint2.png);
+  background-image: url(../../Assets/Transition/masodikszint2.png);
 }

@@ -42,17 +42,23 @@ const defaultItems = [
   phpItemData[2],
   phpItemData[3],
 ];
+const defaultSpells = [
+  phpSpellsData[0],
+  phpSpellsData[1],
+  phpSpellsData[2],
+]
 
 function difficulty(x) {
   localStorage.setItem("difficulty", x);
   diffM.classList.toggle("disabled");
   diffM.parentNode.classList.toggle("disabled");
   story.classList.toggle("disabled");
-  Player.setStats(20 - x, 4, 4);
-  Enemy.setStats(10 + x * 2, 0 + x, 0 + x);
+  Player.setStats(20 - x, 1, 0);
+  Enemy.setStats(20 + x, 0 + x, 2 + x);
   Player.setItems(defaultItems);
-  Player.setSpells(phpSpellsData[3]);
+  Player.setSpells(defaultSpells);
   Player.renewUIStats();
+  Player.renewSpells();
   enemyHPRenew();
   makeEnemy(randomNumber);
 }

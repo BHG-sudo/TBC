@@ -24,11 +24,16 @@ class entity {
     playerUIStats[1].innerHTML = "ATK " + this.ATK;
     playerUIStats[2].innerHTML = "DF " + this.DF;
   }
+  renewSpells(){
+    console.log(this.Spells[0]["spell_name"]);
+    document.getElementById("spellOne").innerHTML = this.Spells[0]["spell_name"];
+    document.getElementById("spellTwo").innerHTML = this.Spells[1]["spell_name"];
+    document.getElementById("spellThree").innerHTML = this.Spells[2]["spell_name"];
+  }
 }
 const Player = new entity(0, 0, 0, 0);
 const Enemy = new entity(0, 0, 0, 0);
 
-console.log(phpItemData[0]["item_bonus"]);
 function transition1() {
   transition.classList.toggle("transition11");
   transition.classList.toggle("transition12");
@@ -77,6 +82,7 @@ function transitionBattle(x) {
   }
 }
 
+// EnemySprite
 let enemyIMG = document.getElementById("enemy");
 function makeEnemy(number) {
   switch (number) {
@@ -116,6 +122,7 @@ function makeEnemy(number) {
 let defPlayer = false;
 let defEnemy = false;
 
+// EnemyAction
 function enemyAction() {
   console.log("enemy köre");
   let randNum = Math.floor(Math.random() * 10);
@@ -165,6 +172,7 @@ function enemyAction() {
   console.log("Player HP: " + Player.HP + "\nEnemy HP: " + Enemy.HP);
 }
 
+// PLayerDefend
 let defend = document.getElementById("defend");
 defend.addEventListener("click", defendPlayer);
 function defendPlayer() {
@@ -172,22 +180,74 @@ function defendPlayer() {
   enemyAction();
 }
 /*
-// kevesebb sebzést kapsz plusz matathatsz a leltárodban
-
 // KÉSÖBB!!!
 // Ha védekezel meg kell csináljál egy minigame-et 
 */
-let inventory = document.getElementById("inventory");
-inventory.addEventListener("click", inventoryM);
 
-function inventoryM() {
-  alert("Ez a funkció még nem működik!");
+// PlayerInventory
+let inventoryLength;
+function createInventory(){
+  inventoryLength = 0
+  for (let i = 0; i < Player.Items.length; i++) {
+    let para = document.createElement("p");
+    para.classList.toggle("disabled");
+    para.id = "item"+i;
+    para.classList.toggle(Player.Items[i]["id"]);
+    para.innerText = Player.Items[i]["item_name"];
+    para.addEventListener("click", inventoryM);
+    battleUI.appendChild(para);
+    inventoryLength++;  
+  }
+  let vissza = document.createElement("p");
+  vissza.innerText = "Vissza";
+  vissza.classList.toggle("disabled")
+  vissza.id = "visszaI";
+  vissza.addEventListener("click", function(){
+    document.getElementById("attack").classList.toggle("disabled");
+    document.getElementById("spell").classList.toggle("disabled");
+    document.getElementById("defend").classList.toggle("disabled");
+    document.getElementById("inventory").classList.toggle("disabled");
+    document.getElementById("visszaI").classList.toggle("disabled");
+    for (let i = 0; i < inventoryLength; i++) {
+      if(!(document.getElementById("item"+i).classList.contains("used"))){
+        document.getElementById("item"+i).classList.toggle("disabled");
+      }
+    }
+  });
+  battleUI.appendChild(vissza);
 }
 
-/*
-// alabból vannak tárgyak a leltárodba és azokat használhatod
+function toggleInventoryON(){
+  createInventory()
+  document.getElementById("attack").classList.toggle("disabled");
+  document.getElementById("spell").classList.toggle("disabled");
+  document.getElementById("defend").classList.toggle("disabled");
+  document.getElementById("inventory").classList.toggle("disabled");
+  document.getElementById("visszaI").classList.toggle("disabled");
+  for (let i = 0; i < inventoryLength; i++) {
+      if(!(document.getElementById("item"+i).classList.contains("used"))){
+        document.getElementById("item"+i).classList.toggle("disabled");
+      }
+    }
+}
+let inventory = document.getElementById("inventory");
+inventory.addEventListener("click", toggleInventoryON);
+function inventoryM(event) {
+  target = event.target;
+  if(target.classList.contains(1)){
+    Player.setStats(Player.maxHP, Player.ATK+parseInt(Player.Items[(target.classList[0]-1)]["item_bonus"]), Player.DF);
+    target.classList.toggle("disabled");
+    target.classList.toggle("used");
+  }
+  if(target.classList.contains(2) || target.classList.contains(3) || target.classList.contains(4)){
+    Player.setStats(Player.maxHP, Player.ATK, Player.DF+parseInt(Player.Items[(target.classList[0]-1)]["item_bonus"]));
+    target.classList.toggle("disabled");
+    target.classList.toggle("used");
+  }
+  Player.renewUIStats();
+}
 
-*/
+// PlayerAttack
 let attack = document.getElementById("attack");
 attack.addEventListener("click", attackPlayer);
 function attackPlayer() {
@@ -199,6 +259,9 @@ function attackPlayer() {
       if (Player.ATK > Enemy.DF) {
         Enemy.HP = Enemy.HP - (Player.ATK - Enemy.DF);
         enemyHPRenew();
+        defEnemy = false;
+      }else{
+        defEnemy = false;
       }
     } else {
       Enemy.HP -= Player.ATK;
@@ -212,9 +275,52 @@ function attackPlayer() {
     }
   }
 }
-/*
-let spell = document.getElementById("spell");
-spell.addEventListener("click", spellPlayer);
 
-// Kell egy alap spell és azt lehessen kiválasztani (deltarune)
-*/
+// PLayerSpell
+let spell = document.getElementById("spell");
+let vissza = document.getElementById("vissza");
+spell.addEventListener("click", toggleSpells);
+vissza.addEventListener("click", toggleSpells);
+function toggleSpells(){
+  document.getElementById("attack").classList.toggle("disabled");
+  document.getElementById("spell").classList.toggle("disabled");
+  document.getElementById("defend").classList.toggle("disabled");
+  document.getElementById("inventory").classList.toggle("disabled");
+  document.getElementById("spellOne").classList.toggle("disabled");
+  document.getElementById("spellTwo").classList.toggle("disabled");
+  document.getElementById("spellThree").classList.toggle("disabled");
+  document.getElementById("vissza").classList.toggle("disabled");
+}
+let spellOne = document.getElementById("spellOne");
+spellOne.addEventListener("click", spellAttack);
+let spellTwo = document.getElementById("spellTwo");
+spellTwo.addEventListener("click", spellAttack);
+let spellThree = document.getElementById("spellThree");
+spellThree.addEventListener("click", spellAttack);
+function spellAttack(event){
+  let target = event.target;
+  if (target.id == "spellOne"){
+      Enemy.HP -= Player.Spells[0]["spell_stat"];
+      enemyHPRenew();
+      if (Enemy.HP <= 0) {
+      battle.classList.toggle("disabled");
+      transitionBattle(2);
+    }
+  }
+  if (target.id == "spellTwo"){
+      Enemy.HP -= Player.Spells[1]["spell_stat"];
+      enemyHPRenew();
+      if (Enemy.HP <= 0) {
+      battle.classList.toggle("disabled");
+      transitionBattle(2);
+    }
+  }
+  if (target.id == "spellThree"){
+      Enemy.HP -= Player.Spells[2]["spell_stat"];
+      enemyHPRenew();
+      if (Enemy.HP <= 0) {
+      battle.classList.toggle("disabled");
+      transitionBattle(2);
+    }
+  }
+}

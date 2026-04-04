@@ -27,10 +27,7 @@ if (mysqli_num_rows($result) > 0) {
         $spells[] = $row;
     }
 }
-chdir("../..");
-$mainMappa = getcwd();
-
-chdir("Assets/Enemy/");
+chdir("../../Assets/Enemy/");
 $enemy = [];
 $mappa = opendir(".");
 while (($fajl = readdir($mappa)) != false) {
@@ -39,9 +36,8 @@ while (($fajl = readdir($mappa)) != false) {
     }
 }
 closedir($mappa);
-chdir($mainMappa);
 
-chdir("Assets/Transition/");
+chdir("../../Assets/Transition/");
 $transition = [];
 $mappa = opendir(".");
 while (($fajl = readdir($mappa)) != false) {
@@ -50,9 +46,8 @@ while (($fajl = readdir($mappa)) != false) {
     }
 }
 closedir($mappa);
-chdir($mainMappa);
 
-chdir("Assets/Room/");
+chdir("../../Assets/Room/");
 $room = [];
 $mappa = opendir(".");
 while (($fajl = readdir($mappa)) != false) {
@@ -61,9 +56,8 @@ while (($fajl = readdir($mappa)) != false) {
     }
 }
 closedir($mappa);
-chdir($mainMappa);
 
-chdir("Assets/Boss/");
+chdir("../../Assets/Boss/");
 $boss = [];
 $mappa = opendir(".");
 while (($fajl = readdir($mappa)) != false) {
@@ -72,8 +66,6 @@ while (($fajl = readdir($mappa)) != false) {
     }
 }
 closedir($mappa);
-chdir($mainMappa);
-
 ?>
 
 
@@ -84,6 +76,7 @@ chdir($mainMappa);
     const phpTransIMG = <?php echo json_encode($transition); ?>;
     const phpRoomIMG = <?php echo json_encode($room); ?>;
     const phpBossIMG = <?php echo json_encode($boss); ?>;
+    console.log();
 </script>
 <!DOCTYPE html>
 <html lang="hu">
@@ -91,7 +84,7 @@ chdir($mainMappa);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS/style.css" type="text/css">
+    <link rel="stylesheet" href="../CSS/style.css">
     <title>TBC</title>
 </head>
 
@@ -149,6 +142,10 @@ chdir($mainMappa);
                 <p id="spell">Varázslat</p>
                 <p id="defend">Védekezés</p>
                 <p id="inventory">Leltár</p>
+                <p id="spellOne" class="disabled"></p>
+                <p id="spellTwo" class="disabled"></p>
+                <p id="spellThree" class="disabled"></p>
+                <p id="vissza" class="disabled">vissza</p>
             </div>
         </div>
     </main>

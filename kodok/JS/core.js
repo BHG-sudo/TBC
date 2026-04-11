@@ -54,13 +54,14 @@ function difficulty(x) {
   diffM.parentNode.classList.toggle("disabled");
   story.classList.toggle("disabled");
   Player.setStats(20 - x, 1, 0);
-  Enemy.setStats(20 + x, 0 + x, 2 + x);
+  Enemy.setStats(20+battles*2,battles+Math.floor(Player.ATK/4),battles+Math.floor(Player.DF/4));
   Player.setItems(defaultItems);
   Player.setSpells(defaultSpells);
   Player.renewUIStats();
   Player.renewSpells();
   enemyHPRenew();
-  makeEnemy(randomNumber);
+  let randomEnemy = Math.floor(Math.random()*phpEnemyIMG.length); 
+  makeEnemy(randomEnemy);
 }
 
 function death() {

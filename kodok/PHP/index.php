@@ -148,6 +148,10 @@ closedir($mappa);
                 <p id="vissza" class="disabled">vissza</p>
             </div>
         </div>
+        <div id="victory" class="victory disabled">
+            <h3>Győztél!</h3>
+            <p id="loot"></p>
+        </div>
     </main>
     <script src="../JS/core.js"></script>
     <script src="../JS/battle.js"></script>

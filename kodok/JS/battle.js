@@ -25,7 +25,6 @@ class entity {
     playerUIStats[2].innerHTML = "DF " + this.DF;
   }
   renewSpells(){
-    console.log(this.Spells[0]["spell_name"]);
     document.getElementById("spellOne").innerHTML = this.Spells[0]["spell_name"];
     document.getElementById("spellTwo").innerHTML = this.Spells[1]["spell_name"];
     document.getElementById("spellThree").innerHTML = this.Spells[2]["spell_name"];
@@ -85,38 +84,7 @@ function transitionBattle(x) {
 // EnemySprite
 let enemyIMG = document.getElementById("enemy");
 function makeEnemy(number) {
-  switch (number) {
-    case 0:
-      enemyIMG.src = phpEnemyIMG[0];
-      break;
-    case 1:
-      enemyIMG.src = phpEnemyIMG[1];
-      break;
-    case 2:
-      enemyIMG.src = phpEnemyIMG[2];
-      break;
-    case 3:
-      enemyIMG.src = phpEnemyIMG[3];
-      break;
-    case 4:
-      enemyIMG.src = phpEnemyIMG[4];
-      break;
-    case 5:
-      enemyIMG.src = phpEnemyIMG[5];
-      break;
-    case 6:
-      enemyIMG.src = phpEnemyIMG[6];
-      break;
-    case 7:
-      enemyIMG.src = phpEnemyIMG[0];
-      break;
-    case 8:
-      enemyIMG.src = phpEnemyIMG[1];
-      break;
-    case 9:
-      enemyIMG.src = phpEnemyIMG[2];
-      break;
-  }
+  enemyIMG.src = phpEnemyIMG[number];
 }
 
 let defPlayer = false;
@@ -186,13 +154,13 @@ function defendPlayer() {
 
 // PlayerInventory
 let inventoryLength;
+let exist = false;
 function createInventory(){
   inventoryLength = 0
   for (let i = 0; i < Player.Items.length; i++) {
     let para = document.createElement("p");
-    para.classList.toggle("disabled");
     para.id = "item"+i;
-    para.classList.toggle(Player.Items[i]["id"]);
+    para.classList.toggle(Player.Items[i]["item_type"]);
     para.innerText = Player.Items[i]["item_name"];
     para.addEventListener("click", inventoryM);
     battleUI.appendChild(para);
@@ -208,13 +176,14 @@ function createInventory(){
     document.getElementById("defend").classList.toggle("disabled");
     document.getElementById("inventory").classList.toggle("disabled");
     document.getElementById("visszaI").classList.toggle("disabled");
-    for (let i = 0; i < inventoryLength; i++) {
-      if(!(document.getElementById("item"+i).classList.contains("used"))){
-        document.getElementById("item"+i).classList.toggle("disabled");
-      }
+    itemDeleter();
+    
+    for (let i = 0; i < inventoryLength+1; i++) { 
+      battleUI.removeChild(battleUI.lastElementChild);
     }
   });
   battleUI.appendChild(vissza);
+  
 }
 
 function toggleInventoryON(){
@@ -224,27 +193,59 @@ function toggleInventoryON(){
   document.getElementById("defend").classList.toggle("disabled");
   document.getElementById("inventory").classList.toggle("disabled");
   document.getElementById("visszaI").classList.toggle("disabled");
-  for (let i = 0; i < inventoryLength; i++) {
-      if(!(document.getElementById("item"+i).classList.contains("used"))){
-        document.getElementById("item"+i).classList.toggle("disabled");
-      }
-    }
 }
 let inventory = document.getElementById("inventory");
 inventory.addEventListener("click", toggleInventoryON);
 function inventoryM(event) {
+  console.log(Player.Items);
   target = event.target;
+  console.log(target.innerText);
   if(target.classList.contains(1)){
-    Player.setStats(Player.maxHP, Player.ATK+parseInt(Player.Items[(target.classList[0]-1)]["item_bonus"]), Player.DF);
+    // Javísd !!
+    Player.setStats(Player.maxHP, Player.ATK+parseInt(itemStat(target.innerText)), Player.DF);
     target.classList.toggle("disabled");
     target.classList.toggle("used");
   }
   if(target.classList.contains(2) || target.classList.contains(3) || target.classList.contains(4)){
-    Player.setStats(Player.maxHP, Player.ATK, Player.DF+parseInt(Player.Items[(target.classList[0]-1)]["item_bonus"]));
+    Player.setStats(Player.maxHP, Player.ATK, Player.DF+parseInt(itemStat(target.innerText)));
     target.classList.toggle("disabled");
     target.classList.toggle("used");
   }
   Player.renewUIStats();
+  
+}
+function itemDeleter(){
+  let indexs = [];
+  let used = document.getElementsByClassName("used");
+  let usedItems = [];
+  for (let i = 0; i < used.length; i++) {
+    usedItems.push(used[i].innerText);
+  }
+  if (usedItems.length === Player.Items.length) {
+    Player.Items.splice(0, Player.Items.length);
+  }
+  else if(usedItems.length < Player.Items.length){
+    for (let i = 0; i < usedItems.length; i++) {
+      for (let j = 0; j < Player.Items.length; j++) {
+        if (usedItems[i] === Player.Items[j]["item_name"]) {
+          indexs.push(j);
+        }
+      }
+    }
+    indexs.sort((a, b) => b - a).forEach(idx => {
+    if (idx >= 0 && idx < Player.Items.length) {
+      Player.Items.splice(idx, 1);
+    }
+    });
+  }
+  console.log(Player.Items);
+}
+function itemStat(x){
+  for (let i = 0; i < Player.Items.length; i++) {
+    if (Player.Items[i]["item_name"] == x){
+      return Player.Items[i]["item_bonus"];
+    }
+  }
 }
 
 // PlayerAttack
@@ -252,8 +253,7 @@ let attack = document.getElementById("attack");
 attack.addEventListener("click", attackPlayer);
 function attackPlayer() {
   if (Enemy.HP <= 0) {
-    battle.classList.toggle("disabled");
-    transitionBattle(2);
+    Victory();
   } else {
     if (defEnemy == true) {
       if (Player.ATK > Enemy.DF) {
@@ -268,8 +268,7 @@ function attackPlayer() {
       enemyHPRenew();
     }
     if (Enemy.HP <= 0) {
-      battle.classList.toggle("disabled");
-      transitionBattle(2);
+      Victory();
     } else {
       enemyAction();
     }
@@ -303,24 +302,74 @@ function spellAttack(event){
       Enemy.HP -= Player.Spells[0]["spell_stat"];
       enemyHPRenew();
       if (Enemy.HP <= 0) {
-      battle.classList.toggle("disabled");
-      transitionBattle(2);
+        Victory();
     }
   }
   if (target.id == "spellTwo"){
       Enemy.HP -= Player.Spells[1]["spell_stat"];
       enemyHPRenew();
       if (Enemy.HP <= 0) {
-      battle.classList.toggle("disabled");
-      transitionBattle(2);
+        Victory();
     }
   }
   if (target.id == "spellThree"){
       Enemy.HP -= Player.Spells[2]["spell_stat"];
       enemyHPRenew();
       if (Enemy.HP <= 0) {
-      battle.classList.toggle("disabled");
-      transitionBattle(2);
+      Victory();
     }
+  }
+  enemyAction();
+}
+let victoryScreen = document.getElementById("victory");
+function Victory(){
+  console.clear();
+  battles ++;
+  let randNum = Math.floor(Math.random() * 10);
+  let loot = document.getElementById("loot");
+  loot.innerText = "Zsákmány:";
+  battle.classList.toggle("disabled");
+  victoryScreen.classList.toggle("disabled");
+  if (randNum < 5) {
+    victoryScreen.style.backgroundImage = "url('../../Assets/Room/szoba.png')";    
+  }else if(randNum >= 5){
+    victoryScreen.style.backgroundImage = "url('../../Assets/Room/sotetszoba.png')";
+  }
+
+  if(localStorage.getItem("difficulty") == 1 || localStorage.getItem("difficulty") == 2){
+    for (let i = 0; i < 2; i++) {
+      let randomLoot = Math.floor(Math.random() * phpItemData.length-1);
+      console.log(randomLoot);
+      console.log(phpItemData[randomLoot]);
+      loot.innerText += " "+phpItemData[randomLoot]["item_name"]+"  ";
+      Player.Items.push(phpItemData[randomLoot]);
+    }
+  }else if(localStorage.getItem("difficulty") == 1 || localStorage.getItem("difficulty") == 2){
+    let randomLoot = Math.floor(Math.random() * phpItemData.length-1);
+    loot.innerText += " "+phpItemData[randomLoot]["item_name"];
+    Player.Items.push(phpItemData[randomLoot]);
+  }
+  console.log(Player.Items);
+  let toBattle = document.createElement("p");
+  toBattle.innerText = "Csatába!";
+  toBattle.id = "toBattle";
+  toBattle.addEventListener("click", continueToBattle);
+  victoryScreen.appendChild(toBattle);
+}
+let battles = 0;
+function continueToBattle(){
+  if (battles < 5) {
+    Player.HP = Player.maxHP;
+    Enemy.setStats(20+battles*2,battles+Math.floor(Player.ATK/2),battles+Math.floor(Player.DF/2));
+    let randomEnemy = Math.floor(Math.random()*phpEnemyIMG.length); 
+    makeEnemy(randomEnemy);
+    enemyHPRenew();
+    Player.renewUIStats();
+    victoryScreen.classList.toggle("disabled");
+    transitionBattle(1);
+  }else if(battles >= 5 && battles < 9){
+    // Erősebb ellenfelek
+  }else if(battles == 10){
+    // Boss
   }
 }

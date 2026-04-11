@@ -115,3 +115,24 @@ li:hover {
 .transition22 {
   background-image: url(../../Assets/Transition/masodikszint2.png);
 }
+.victory{
+  width: 720px;
+  height: 480px;
+  color: white;
+  position: relative;
+}
+.victory>h3{
+  position: absolute;
+  top: 5%;
+  left: 45%;
+}
+#loot{
+  position: absolute;
+  top: 50%;
+  left: 40%;
+}
+#toBattle{
+  position: absolute;
+  bottom: 5%;
+  right: 10%;
+}

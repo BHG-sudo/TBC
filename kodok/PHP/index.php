@@ -86,6 +86,16 @@ closedir($mappa);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS/style.css">
     <title>TBC</title>
+    <style>
+        @media (max-width: 800px) {
+            body{
+                background-image: url(../../Assets/nopc.jpg);
+            }
+            body>*{
+                display: none;
+            }
+        }
+    </style>
 </head>
 
 <body>

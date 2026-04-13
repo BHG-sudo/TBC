@@ -41,6 +41,7 @@ const defaultItems = [
   phpItemData[1],
   phpItemData[2],
   phpItemData[3],
+  phpItemData[23]
 ];
 const defaultSpells = [
   phpSpellsData[0],

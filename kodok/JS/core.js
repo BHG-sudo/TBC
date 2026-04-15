@@ -41,13 +41,12 @@ const defaultItems = [
   phpItemData[1],
   phpItemData[2],
   phpItemData[3],
-  phpItemData[23]
 ];
 const defaultSpells = [
   phpSpellsData[0],
   phpSpellsData[1],
   phpSpellsData[2],
-]
+];
 
 function difficulty(x) {
   localStorage.setItem("difficulty", x);

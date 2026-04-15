@@ -207,7 +207,6 @@ function inventoryM(event) {
   target = event.target;
   console.log(target.innerText);
   if (target.classList.contains(1)) {
-    // Javísd !!
     Player.setStats(
       Player.maxHP,
       Player.ATK + parseInt(itemStat(target.innerText)),
@@ -339,6 +338,7 @@ function spellAttack(event) {
   }
   enemyAction();
 }
+let lootedItems = [];
 let victoryScreen = document.getElementById("victory");
 function Victory() {
   console.clear();
@@ -360,19 +360,29 @@ function Victory() {
     localStorage.getItem("difficulty") == 2
   ) {
     for (let i = 0; i < 2; i++) {
-      let randomLoot = Math.floor(Math.random() * phpItemData.length - 1) +1;
+      let randomLoot = Math.floor(Math.random() * (phpItemData.length - 1));
       console.log(randomLoot);
       console.log(phpItemData[randomLoot]);
-      loot.innerText += " " + phpItemData[randomLoot]["item_name"] + "  ";
-      Player.Items.push(phpItemData[randomLoot]);
+      if (lootedItems.includes(randomLoot)) {
+        loot.innerText += " semmi ";
+      } else {
+        loot.innerText += " " + phpItemData[randomLoot]["item_name"] + "  ";
+        Player.Items.push(phpItemData[randomLoot]);
+        lootedItems.push(randomLoot);
+      }
     }
   } else if (
-    localStorage.getItem("difficulty") == 1 ||
-    localStorage.getItem("difficulty") == 2
+    localStorage.getItem("difficulty") == 3 ||
+    localStorage.getItem("difficulty") == 4
   ) {
-    let randomLoot = Math.floor(Math.random() * phpItemData.length - 1) +1;
-    loot.innerText += " " + phpItemData[randomLoot]["item_name"];
-    Player.Items.push(phpItemData[randomLoot]);
+    let randomLoot = Math.floor(Math.random() * (phpItemData.length - 1));
+    if (lootedItems.includes(randomLoot)) {
+      loot.innerText += " semmi ";
+    } else {
+      loot.innerText += " " + phpItemData[randomLoot]["item_name"];
+      Player.Items.push(phpItemData[randomLoot]);
+      lootedItems.push(randomLoot);
+    }
   }
   console.log(Player.Items);
   let toBattle = document.createElement("p");

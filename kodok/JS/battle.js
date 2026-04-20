@@ -124,16 +124,14 @@ function enemyAction() {
       if (defPlayer == true) {
         if (Enemy.ATK > Player.DF) {
           Player.HP = Player.HP - (Enemy.ATK - Player.DF);
-          damage("player");
-          Player.renewUIStats();
+          enemyAnim();
           defPlayer = false;
         } else {
           defPlayer = false;
         }
       } else {
         Player.HP -= Enemy.ATK;
-        damage("player");
-        Player.renewUIStats();
+        enemyAnim();
       }
       if (Player.HP <= 0) {
         battle.classList.toggle("disabled");
@@ -159,6 +157,7 @@ function enemyAction() {
       console.log("Mi történik");
       break;
   }
+
   console.log("Player HP: " + Player.HP + "\nEnemy HP: " + Enemy.HP);
 }
 
@@ -292,23 +291,19 @@ function attackPlayer() {
     if (defEnemy == true) {
       if (Player.ATK > Enemy.DF) {
         Enemy.HP = Enemy.HP - (Player.ATK - Enemy.DF);
-        damage("enemy");
-        enemyHPRenew();
+        playerAnim();
         defEnemy = false;
       } else {
         defEnemy = false;
       }
     } else {
       Enemy.HP -= Player.ATK;
-      damage("enemy");
-      enemyHPRenew();
+      playerAnim();
     }
     if (Enemy.HP <= 0) {
       freezeClick = true;
       victoryDance();
       setTimeout(Victory, 3000);
-    } else {
-      enemyAction();
     }
   }
 }
@@ -338,25 +333,20 @@ function spellAttack(event) {
   let target = event.target;
   if (target.id == "spellOne") {
     Enemy.HP -= Player.Spells[0]["spell_stat"];
-    damage("enemy");
-    enemyHPRenew();
+    playerAnim();
   }
   if (target.id == "spellTwo") {
     Enemy.HP -= Player.Spells[1]["spell_stat"];
-    damage("enemy");
-    enemyHPRenew();
+    playerAnim();
   }
   if (target.id == "spellThree") {
     Enemy.HP -= Player.Spells[2]["spell_stat"];
-    damage("enemy");
-    enemyHPRenew();
+    playerAnim();
   }
   if (Enemy.HP <= 0) {
     freezeClick = true;
     victoryDance();
     setTimeout(Victory, 3000);
-  } else {
-    enemyAction();
   }
 }
 let lootedItems = [];
@@ -487,4 +477,69 @@ function victoryDance() {
     }
   );
 }
-// function playerAtkAnim(){}
+function playerAnim() {
+  const element = document.getElementById("player");
+  const anim = element.animate(
+    [
+      { offset: 0, transform: "translateX(0) translateY(0)" },
+      { offset: 0.5, transform: "translateX(300px) translateY(-60px)" },
+      { offset: 1, transform: "translateX(500px) translateY(-180px)" },
+    ],
+    {
+      duration: 280,
+      easing: "ease-in-out",
+      direction: "alternate",
+      iterations: 1,
+    }
+  );
+  setTimeout(function () {
+    const element = document.getElementById("enemy");
+    const anim = element.animate(
+      [
+        { offset: 0, transform: "translateY(0)" },
+        { offset: 1, transform: "translateY(-40px)" },
+      ],
+      {
+        duration: 50,
+        easing: "ease-in-out",
+        direction: "alternate",
+        iterations: 2,
+      }
+    );
+    enemyHPRenew();
+    enemyAction();
+  }, 300);
+}
+function enemyAnim() {
+  const element = document.getElementById("enemy");
+  const anim = element.animate(
+    [
+      { offset: 0, transform: "translateX(0) translateY(0)" },
+      { offset: 0.5, transform: "translateX(-300px) translateY(60px)" },
+      { offset: 1, transform: "translateX(-500px) translateY(180px)" },
+    ],
+    {
+      duration: 280,
+      easing: "ease-in-out",
+      direction: "alternate",
+      iterations: 1,
+    }
+  );
+  setTimeout(function () {
+    const element = document.getElementById("player");
+    const anim = element.animate(
+      [
+        { offset: 0, transform: "translateY(0)" },
+        { offset: 1, transform: "translateY(-40px)" },
+      ],
+      {
+        duration: 50,
+        easing: "ease-in-out",
+        direction: "alternate",
+        iterations: 2,
+      }
+    );
+
+    Player.renewUIStats();
+  }, 300);
+}

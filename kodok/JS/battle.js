@@ -36,6 +36,19 @@ class entity {
 const Player = new entity(0, 0, 0, 0);
 const Enemy = new entity(0, 0, 0, 0);
 
+let freezeClick = false;
+
+document.addEventListener(
+  "click",
+  (e) => {
+    if (freezeClick) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+  },
+  true
+);
+
 function transition1() {
   transition.classList.toggle("transition11");
   transition.classList.toggle("transition12");
@@ -111,6 +124,7 @@ function enemyAction() {
       if (defPlayer == true) {
         if (Enemy.ATK > Player.DF) {
           Player.HP = Player.HP - (Enemy.ATK - Player.DF);
+          damage("player");
           Player.renewUIStats();
           defPlayer = false;
         } else {
@@ -118,6 +132,7 @@ function enemyAction() {
         }
       } else {
         Player.HP -= Enemy.ATK;
+        damage("player");
         Player.renewUIStats();
       }
       if (Player.HP <= 0) {
@@ -270,11 +285,14 @@ let attack = document.getElementById("attack");
 attack.addEventListener("click", attackPlayer);
 function attackPlayer() {
   if (Enemy.HP <= 0) {
-    Victory();
+    freezeClick = true;
+    victoryDance();
+    setTimeout(Victory, 3000);
   } else {
     if (defEnemy == true) {
       if (Player.ATK > Enemy.DF) {
         Enemy.HP = Enemy.HP - (Player.ATK - Enemy.DF);
+        damage("enemy");
         enemyHPRenew();
         defEnemy = false;
       } else {
@@ -282,10 +300,13 @@ function attackPlayer() {
       }
     } else {
       Enemy.HP -= Player.ATK;
+      damage("enemy");
       enemyHPRenew();
     }
     if (Enemy.HP <= 0) {
-      Victory();
+      freezeClick = true;
+      victoryDance();
+      setTimeout(Victory, 3000);
     } else {
       enemyAction();
     }
@@ -317,30 +338,31 @@ function spellAttack(event) {
   let target = event.target;
   if (target.id == "spellOne") {
     Enemy.HP -= Player.Spells[0]["spell_stat"];
+    damage("enemy");
     enemyHPRenew();
-    if (Enemy.HP <= 0) {
-      Victory();
-    }
   }
   if (target.id == "spellTwo") {
     Enemy.HP -= Player.Spells[1]["spell_stat"];
+    damage("enemy");
     enemyHPRenew();
-    if (Enemy.HP <= 0) {
-      Victory();
-    }
   }
   if (target.id == "spellThree") {
     Enemy.HP -= Player.Spells[2]["spell_stat"];
+    damage("enemy");
     enemyHPRenew();
-    if (Enemy.HP <= 0) {
-      Victory();
-    }
   }
-  enemyAction();
+  if (Enemy.HP <= 0) {
+    freezeClick = true;
+    victoryDance();
+    setTimeout(Victory, 3000);
+  } else {
+    enemyAction();
+  }
 }
 let lootedItems = [];
 let victoryScreen = document.getElementById("victory");
-function Victory() {
+async function Victory() {
+  freezeClick = false;
   console.clear();
   battles++;
   let randNum = Math.floor(Math.random() * 10);
@@ -431,3 +453,38 @@ function continueToBattle() {
     transitionBattle(2);
   }
 }
+function damage(who) {
+  const element = document.getElementById(who);
+  const anim = element.animate(
+    [
+      { offset: 0, transform: "translateY(0)" },
+      { offset: 1, transform: "translateY(-40px)" },
+    ],
+    {
+      duration: 50,
+      easing: "ease-in-out",
+      direction: "alternate",
+      iterations: 2,
+    }
+  );
+}
+function victoryDance() {
+  const element = document.getElementById("player");
+  const anim = element.animate(
+    [
+      { offset: 0, transform: "translateY(0)" },
+      { offset: 0.2, transform: "translateY(-40px)" },
+      { offset: 0.4, transform: "translateY(0)" },
+      { offset: 0.6, transform: "translateY(0)" },
+      { offset: 0.8, transform: "translateY(-40px)" },
+      { offset: 1, transform: "translateY(0)" },
+    ],
+    {
+      duration: 1500,
+      easing: "ease-in-out",
+      direction: "alternate",
+      iterations: 2,
+    }
+  );
+}
+// function playerAtkAnim(){}

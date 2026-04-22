@@ -88,10 +88,11 @@ closedir($mappa);
     <title>TBC</title>
     <style>
         @media (max-width: 800px) {
-            body{
+            body {
                 background-image: url(../../Assets/nopc.jpg);
             }
-            body>*{
+
+            body>* {
                 display: none;
             }
         }
@@ -135,6 +136,11 @@ closedir($mappa);
             </ul>
         </div>
         <div id="transition" class="transition disabled"></div>
+        <div id="lada" class="lada disabled">
+            <img src="../../Assets/lada.png" alt="Láda">
+            <p id="ladaLoot">Szereztél: tőr, bőr sisak, bőr mellvért, bőr nadrág</p>
+            <p id="csata">Folytatás</p>
+        </div>
         <div id="deathscreen" class="deathscreen disabled"></div>
         <div id="battle" class="battle disabled">
             <div id="EnemyContainer" class="EnemyContainer">
@@ -161,6 +167,9 @@ closedir($mappa);
         <div id="victory" class="victory disabled">
             <h3>Győztél!</h3>
             <p id="loot"></p>
+        </div>
+        <div id="disabled">
+            <audio id="audio" autoplay="true" src="../../Assets/zenek/menu.mp3" type="audio/mpeg">
         </div>
     </main>
     <script src="../JS/core.js"></script>

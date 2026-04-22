@@ -49,14 +49,25 @@ document.addEventListener(
   true
 );
 
+document.getElementById("csata").addEventListener("click", function () {
+  lada.classList.toggle("disabled");
+  battle.classList.toggle("disabled");
+});
+lada = document.getElementById("lada");
 function transition1() {
   transition.classList.toggle("transition11");
   transition.classList.toggle("transition12");
 }
+let fisrt = 0;
 function clInt1() {
   clearInterval(tranInterval1);
   transition.classList.toggle("disabled");
-  battle.classList.toggle("disabled");
+  if (fisrt == 0) {
+    lada.classList.toggle("disabled");
+    fisrt++;
+  } else {
+    battle.classList.toggle("disabled");
+  }
   if (transition.classList.contains("transition11")) {
     transition.classList.toggle("transition11");
   }
@@ -99,12 +110,23 @@ function transitionBattle(x) {
 }
 
 // EnemySprite
+let audio = document.getElementById("audio");
 let enemyIMG = document.getElementById("enemy");
 function makeEnemy(number) {
   enemyIMG.src = phpEnemyIMG[number];
+  if (number == 2) {
+    audio.src = "../../Assets/zenek/hexen_fight.mp3";
+  } else {
+    audio.src = "../../Assets/zenek/fight.mp3";
+  }
+  audio.load();
+  audio.play();
 }
 function makeBoss(number) {
   enemyIMG.src = phpBossIMG[number];
+  audio.src = "../../Assets/zenek/boss_fight.mp3";
+  audio.load();
+  audio.play();
 }
 
 let defPlayer = false;
@@ -302,8 +324,9 @@ function attackPlayer() {
     }
     if (Enemy.HP <= 0) {
       freezeClick = true;
-      victoryDance();
-      setTimeout(Victory, 3000);
+      setTimeout(victoryDance, 500);
+    } else {
+      enemyAction();
     }
   }
 }
@@ -345,8 +368,9 @@ function spellAttack(event) {
   }
   if (Enemy.HP <= 0) {
     freezeClick = true;
-    victoryDance();
-    setTimeout(Victory, 3000);
+    setTimeout(victoryDance, 500);
+  } else {
+    enemyAction();
   }
 }
 let lootedItems = [];
@@ -476,6 +500,7 @@ function victoryDance() {
       iterations: 2,
     }
   );
+  setTimeout(Victory, 3000);
 }
 function playerAnim() {
   const element = document.getElementById("player");
@@ -507,7 +532,6 @@ function playerAnim() {
       }
     );
     enemyHPRenew();
-    enemyAction();
   }, 300);
 }
 function enemyAnim() {

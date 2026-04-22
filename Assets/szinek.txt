@@ -17,4 +17,3 @@ BÚTOROK:
   - alap szín: 6e3728
   - körvonal: 5d2f22
   - árnyék: 4a251b
-  - aranyozás: 896600

@@ -76,7 +76,10 @@ closedir($mappa);
     const phpTransIMG = <?php echo json_encode($transition); ?>;
     const phpRoomIMG = <?php echo json_encode($room); ?>;
     const phpBossIMG = <?php echo json_encode($boss); ?>;
-    console.log();
+    var audio = new Audio("../../Assets/zenek/menu.mp3");
+    audio.volume = 0.1;
+    audio.loop = true;
+    audio.autoplay = true; 
 </script>
 <!DOCTYPE html>
 <html lang="hu">
@@ -167,9 +170,6 @@ closedir($mappa);
         <div id="victory" class="victory disabled">
             <h3>Győztél!</h3>
             <p id="loot"></p>
-        </div>
-        <div id="disabled">
-            <audio id="audio" autoplay="true" src="../../Assets/zenek/menu.mp3" type="audio/mpeg">
         </div>
     </main>
     <script src="../JS/core.js"></script>

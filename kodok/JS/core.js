@@ -60,8 +60,6 @@ function difficulty(x) {
   Player.renewUIStats();
   Player.renewSpells();
   enemyHPRenew();
-  let randomEnemy = Math.floor(Math.random() * phpEnemyIMG.length);
-  makeEnemy(randomEnemy);
 }
 
 function death() {

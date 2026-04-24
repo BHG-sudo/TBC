@@ -52,6 +52,8 @@ document.addEventListener(
 document.getElementById("csata").addEventListener("click", function () {
   lada.classList.toggle("disabled");
   battle.classList.toggle("disabled");
+  let randomEnemy = Math.floor(Math.random() * phpEnemyIMG.length);
+  makeEnemy(randomEnemy);
 });
 lada = document.getElementById("lada");
 function transition1() {
@@ -110,14 +112,17 @@ function transitionBattle(x) {
 }
 
 // EnemySprite
-let audio = document.getElementById("audio");
 let enemyIMG = document.getElementById("enemy");
 function makeEnemy(number) {
   enemyIMG.src = phpEnemyIMG[number];
   if (number == 2) {
     audio.src = "../../Assets/zenek/hexen_fight.mp3";
+    audio.volume = 0.2;
+    console.log("HEXEN "+number);
   } else {
     audio.src = "../../Assets/zenek/fight.mp3";
+    audio.volume = 0.2;
+    console.log("NORMAL "+number);
   }
   audio.load();
   audio.play();
@@ -125,6 +130,7 @@ function makeEnemy(number) {
 function makeBoss(number) {
   enemyIMG.src = phpBossIMG[number];
   audio.src = "../../Assets/zenek/boss_fight.mp3";
+  audio.volume = 0.2;
   audio.load();
   audio.play();
 }
